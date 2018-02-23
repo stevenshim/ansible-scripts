@@ -1,0 +1,22 @@
+---
+- name: make java directory
+  file:
+    path=/usr/local/java/
+    state=directory
+
+- name: unarchive java
+  unarchive: src=https://s3.ap-northeast-2.amazonaws.com/awskrug-s3-tmp/packages/jdk/jdk-8u121-linux-x64.tar
+    dest=/usr/local/java
+    copy=no
+
+- name: link java
+  file:
+    src: '{{ item.src }}'
+    dest: '{{ item.dest }}'
+    state: link
+  with_items:
+  - { src: '/usr/local/java/jdk1.8.0_121', dest: '/usr/local/java/jdk' }
+  - { src: '/usr/local/java/jdk1.8.0_121/bin/java', dest: '/etc/alternatives/java' }
+
+- name: config java
+  template: src=java.sh.j2 dest=/etc/profile.d/java.sh
