@@ -1,0 +1,34 @@
+---
+- name: add jenkins repository
+  get_url: 
+    url: https://pkg.jenkins.io/redhat-stable/jenkins.repo
+    dest: /etc/yum.repos.d/jenkins.repo
+
+- name: get key for checksum
+  rpm_key: state=present key=https://pkg.jenkins.io/redhat-stable/jenkins.io.key
+
+- name: install jenkins
+  yum:
+    name: jenkins
+    state: present
+
+#mount disk 
+- name: mkdir for mount
+  file:
+    path: /data
+    state: directory
+    owner: jenkins
+    group: jenkins
+
+- name: mkdir for jenkins
+  file:
+    path: /data/jenkins
+    state: directory
+    owner: jenkins
+    group: jenkins
+
+- name: change jekins home
+  template: src=jenkins.j2 dest=/etc/sysconfig/jenkins
+
+- name: jenkins start
+  service: name=jenkins state=restarted
