@@ -4,5 +4,4 @@
   become: yes
   become_user: root
   roles:
-  - java
-  - jenkins
+  - java 
