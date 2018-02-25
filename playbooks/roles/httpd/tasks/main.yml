@@ -1,0 +1,14 @@
+---
+- name: install httpd
+  yum: name={{ item.package }}
+  with_items:
+  - { package: httpd-2.4.6 }
+
+- name: create directory httpd document root
+  file:
+    path=/data/web/docroot
+    state=directory
+    owner=apache
+    group=apache
+    mode=0755
+    recurse=yes
