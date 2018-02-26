@@ -1,0 +1,14 @@
+---
+- task: Install package (software-properties-common)
+  apt:
+    update_cache: yes
+    name: software-properties-common
+
+- task: Add ansible repository
+  apt_repository:
+    repo: 'ppa:ansible/ansible'
+
+- task: Update repository & install Ansible
+  apt:
+    update_cache: yes
+    name: ansible
