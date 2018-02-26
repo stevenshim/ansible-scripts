@@ -1,0 +1,25 @@
+---
+- name: Copy packer sample template
+  copy:
+    src: aws-krug.json.j2
+    dest: /opt/rosco/config/packer/aws-krug.json
+    owner: spinnaker
+    group: spinnaker
+    mode: 0640
+
+- name: Clone github ansible script for Packer Provisioner
+  git:
+    repo: https://github.com/stevenshim/ansible-scripts.git
+    dest: /opt/rosco/config/packer/ansible_krug
+
+- name: change file ownership.
+  file:
+    path: /opt/rosco/config/packer/ansible_krug
+    owner: spinnaker
+    group: spinnaker
+    recurse: yes
+
+- name: replace rosco.yml setting
+  copy:
+    src: rosco.yml
+    dest: /opt/rosco/config/rosco.yml

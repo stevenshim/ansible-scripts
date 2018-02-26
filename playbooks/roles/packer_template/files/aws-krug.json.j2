@@ -1,0 +1,48 @@
+{
+  "variables": {
+    "aws_region": "ap-northeast-2",
+    "aws_ssh_username": "ec2-user",
+    "aws_instance_type": "t2.micro",
+    "aws_source_ami": "{{user `aws_source_ami`}}",
+    "aws_target_ami": null,
+    "aws_associate_public_ip_address": "true",
+    "aws_ena_support": "false",
+    "aws_spot_price": "0",
+    "aws_spot_price_auto_product": "",
+    "appversion": "",
+    "build_host": "",
+    "repository": "",
+    "package_type": "",
+    "packages": "",
+    "upgrade": "",
+    "configDir": ""
+  },
+  "builders": [{
+    "type": "amazon-ebs",
+    "access_key": "{{user `aws_access_key`}}",
+    "secret_key": "{{user `aws_secret_key`}}",
+    "subnet_id": "{{user `subnet_id`}}",
+    "vpc_id": "{{user `aws_vpc_id`}}",
+    "region": "{{user `aws_region`}}",
+    "security_group_id": "{{user `security_group_id`}}",
+    "ssh_username": "{{user `aws_ssh_username`}}",
+    "ssh_pty": true,
+    "instance_type": "{{user `aws_instance_type`}}",
+    "source_ami": "{{user `aws_source_ami`}}",
+    "ami_name": "{{user `aws_target_ami`}}",
+    "associate_public_ip_address": "{{user `aws_associate_public_ip_address`}}",
+    "ena_support": "{{user `aws_ena_support`}}",
+    "tags": {
+      "appversion": "{{user `appversion`}}",
+      "build_host": "{{user `build_host`}}",
+      "build_info_url": "{{user `build_info_url`}}"
+    },
+    "run_tags": {"Packages": "{{user `packages`}}"}
+  }],
+  "provisioners": [{
+    "type": "ansible",
+    "user": "ec2-user",
+    "playbook_file": "/opt/rosco/config/packer/ansible_krug/playbooks/java.yml",
+    "pause_before": "30s"
+  }]
+}

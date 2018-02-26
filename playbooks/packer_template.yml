@@ -1,0 +1,9 @@
+---
+- hosts: all
+  remote_user: ubuntu 
+  become: yes
+  become_user: root
+  roles:
+  - git
+  - packer_template 
+
