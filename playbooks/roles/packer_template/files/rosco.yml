@@ -62,7 +62,7 @@ aws:
         detailedDescription: AWS Amazon Linux 1
         packageType: rpm
         templateFile: aws-ebs.json
-      virtualizationsSettings:
+      virtualizationSettings:
       - region: ap-northeast-2
         virtualizationType: hvm
         instanceType: t2.micro
