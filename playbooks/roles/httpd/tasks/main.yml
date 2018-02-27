@@ -21,6 +21,14 @@
     group=apache
     mode=0644
 
+- name: copy index file
+  copy:
+    src=index.html
+    dest=/data/web/docroot
+    owner=apache
+    group=apache
+    mode=0755
+
 - name: start httpd service
   service: 
     name: httpd
