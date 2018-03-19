@@ -32,3 +32,11 @@
 
 - name: jenkins start
   service: name=jenkins state=restarted
+
+- name: cat initPassWord
+  shell: /bin/cat /data/jenkins/secrets/initialAdminPassword 
+  register: initAdminPw
+  tags: pw
+
+- debug: var=initAdminPw.stdout_lines
+  tags: pw
